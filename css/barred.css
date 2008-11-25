@@ -1,0 +1,89 @@
+body {
+    background-color: white;
+    padding: 10px;
+	margin-top: 50px;
+}
+table {
+	display: block;
+	clear: both;
+}
+table, tr, td, th {
+       margin: 0px;
+       border-width: 0px;
+       border-spacing: 0px;
+       border-collapse: collapse;
+}
+form {
+  margin: 50px 30px;
+}
+label {
+  display: block;
+  float: left;
+  padding: 10px;
+  background: white;
+}
+input {
+  display: block;
+}
+input:focus {
+  background: yellow;
+}
+input[disabled] {
+  	background: white;
+	color: black;
+	border: none;
+	border-top: 1px solid black;
+	padding: 5px;
+}
+table * tr td {border: solid 1px silver; padding: 10px}
+table * tr th {border: solid 1px grey; padding: 10px}
+#selection table tr td {border: none}
+#indicateurs {
+    margin-bottom: 10px;
+    background: silver;
+}
+#message_serveur {
+	position: fixed;
+	right: 0px;
+	bottom: 0px;
+    clear: left;
+    margin: 5px;
+    padding: 10px;
+}
+#entete_visible_de_loin {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+    clear: right;
+    margin: 5px;
+    padding: 10px;
+	color: white;
+	background-color: black;
+	font-size: 30px;
+}
+.bouton {
+	color: blue;
+	text-decoration: underline;
+	padding: 5px;
+	border: 1px solid;
+	cursor: pointer;
+}
+.inactif {
+	color: black;
+}
+.numerique {text-align: right}
+.message_erreur {
+    color: white;
+    font-weight: bold;
+    background-color: red;
+	padding: 10px;
+	margin: 5px;
+}
+
+.message_notification {
+    color: white;
+    font-weight: bold;
+    background-color: green;
+	padding: 10px;
+	margin: 5px;
+}
