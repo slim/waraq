@@ -1,0 +1,70 @@
+<html>
+<head>
+    <script src="lib/jquery-1.2.3.js"></script>
+    <script src="lib/jquery.fn.js"></script>
+    <script src="lib/jquery.print.js"></script>
+    <script src="lib/screw.builder.js"></script>
+    <script src="lib/screw.matchers.js"></script>
+    <script src="lib/screw.events.js"></script>
+    <script src="lib/screw.behaviors.js"></script>
+    <script src="lib/screw.mock.js"></script>
+    <link rel="stylesheet" href="lib/screw.css">
+    
+    <script src="../../js/mode.js"></script>
+    <script type="text/javascript">
+      Screw.Unit(function() {
+        describe("Mode.enter()", function() {
+		  var mode1, mode2, mode3,
+			  current_mode;
+		  mode1 = new Mode({
+			enter: function() {
+				this.name = "mode1";
+				current_mode = 'mode1';
+				mode1_state = 'enabled';
+			},
+			exit: function() {
+				mode1_state = 'disabled';
+			}
+		  });
+		  mode2 = new Mode({
+			enter: function() {
+				this.name = "mode2";
+				current_mode = 'mode2';
+				mode2_state = 'enabled';
+			},
+			exit: function() {
+				mode2_state = 'disabled';
+			}
+		  });
+		  mode3 = new Mode({
+			enter: function() {
+				this.name = "mode3";
+				current_mode = 'mode2';
+				mode3_state = 'enabled';
+			},
+			exit: function() {
+				mode3_state = 'disabled';
+			}
+		  });
+          it("enters the mode", function() {
+			mode2.enter();
+			expect(current_mode).to(equal, "mode2");
+			expect(mode2_state).to(equal, "enabled");
+		  });
+          it("exits the mode", function() {
+			mode2.exit();
+			expect(mode2_state).to(equal, "disabled");
+		  });
+          it("exits previous mode before entering a new mode", function() {
+			mode2.enter();
+			expect(mode2_state).to(equal, "enabled");
+			mode3.enter();
+			expect(mode2_state).to(equal, "disabled");
+		  });
+		});
+	  });
+    </script>
+</head>
+<body>
+</body>
+</html>
