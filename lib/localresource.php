@@ -20,7 +20,7 @@
 			} else {
 				$u = $this->url .'/'. $path;
 			}
-			$r = new LocalResource($u, $f);
+			$r = new LocalResource(absolutize($u), absolutize($f));
 			return $r;
 		}
 
@@ -48,7 +48,7 @@
 	{
 		$path = ereg_replace('/\./', '/', $path); 
 		$path = ereg_replace('([^:])//+', '\1/', $path);
-		while (ereg('/[^/]+/+\.\./+', $path)) {
+		while (ereg('/[^/]+/+\.\.', $path)) {
 			$path = ereg_replace('/[^/]+/+\.\./*', '/', $path);
 		}
 

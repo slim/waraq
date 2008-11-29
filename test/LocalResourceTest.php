@@ -34,6 +34,9 @@ class LocalResourceTest extends PHPUnit_TestCase {
         $result   = $this->LocalResource->get("test.txt");
         $expected = new LocalResource("http://localhost/warak/test/test.txt", "/var/www/teh/warak/test/test.txt" );
         $this->assertEquals($expected, $result);
+        $result   = $this->LocalResource->get("../..");
+        $expected = new LocalResource("http://localhost/", "/var/www/teh/" );
+        $this->assertEquals($expected, $result);
     }
 
     function testget_file()
@@ -60,6 +63,12 @@ class LocalResourceTest extends PHPUnit_TestCase {
         $this->assertEquals($expected, $result);
 		$result = absolutize("/xxx/YYY/../../zzz/./aaa/..");
 		$expected = "/zzz/";
+        $this->assertEquals($expected, $result);
+		$result = absolutize("/xxx/YYY/../../zzz/wwww/aaa/../..");
+		$expected = "/zzz/";
+        $this->assertEquals($expected, $result);
+		$result = absolutize("/var/www/teh/warak/..");
+		$expected = "/var/www/teh/";
         $this->assertEquals($expected, $result);
 	}
 
