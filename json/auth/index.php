@@ -1,8 +1,9 @@
 <?php
 	session_start();
 
-	require "../../ini.php";
-	require "../../lib/user.php";
+define(ROOT, '../..');
+	require ROOT ."/ini.php";
+	require ROOT ."/lib/user.php";
 
 User::set_db($ini['db'], $ini['db.user'], $ini['db.password']);
 

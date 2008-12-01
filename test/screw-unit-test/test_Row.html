@@ -1,0 +1,96 @@
+<html>
+<head>
+    <script src="lib/jquery-1.2.3.js"></script>
+    <script src="lib/jquery.fn.js"></script>
+    <script src="lib/jquery.print.js"></script>
+    <script src="lib/screw.builder.js"></script>
+    <script src="lib/screw.matchers.js"></script>
+    <script src="lib/screw.events.js"></script>
+    <script src="lib/screw.behaviors.js"></script>
+    <script src="lib/screw.mock.js"></script>
+    <link rel="stylesheet" href="lib/screw.css">
+    
+    <script src="../../js/row.js"></script>
+    <script type="text/javascript">
+      Screw.Unit(function() {
+        describe("ROW.init()", function() {
+		  after(function() {
+			ROW.init();
+		  });
+          it("finds all the rows with an id in the document", function() {
+			ROW.init();
+			expect(ROW.rows.length).to(equal, 6);
+		  });
+          it("... or in the given table", function() {
+			ROW.init(document.getElementById('first_table'));
+			expect(ROW.rows.length).to(equal, 3);
+		  });
+		});
+        describe("ROW.first()", function() {
+          it("fires init() if (and only if) the document rows are not linked", function() {
+			ROW.first();
+			expect(ROW.rows.length).to(equal, 6);
+			ROW.first();
+			expect(ROW.rows.length).to(equal, 6);
+		  });
+          it("gives the first row in the document", function() {
+			expect(ROW.first().id).to(equal, "L0001");
+		  });
+		});
+        describe("ROW.current()", function() {
+          it("gives the currently selected row", function() {
+			expect(ROW.current().id).to(equal, "L0001");
+		  });
+		});
+        describe("ROW.next()", function() {
+			var last_move = null;
+          it("sets the current row to the next row and returns it", function() {
+			expect(ROW.next().id).to(equal, "L0002");
+			expect(ROW.current().id).to(equal, "L0002");
+			expect(ROW.next().id).to(equal, "L0003");
+			expect(ROW.next().id).to(equal, "L0004");
+		  });
+          it("executes onNext if it exists", function() {
+			ROW.onNext = function() {
+				last_move = "next";
+			}
+			ROW.next();
+			expect(last_move).to(equal, "next");
+		  });
+		});
+        describe("ROW.previous()", function() {
+			var last_move = null;
+          it("sets the current row to the previous row and returns it", function() {
+			expect(ROW.previous().id).to(equal, "L0004");
+			expect(ROW.current().id).to(equal, "L0004");
+		  });
+          it("executes onPrevious() if it exists", function() {
+			ROW.onPrevious = function() {
+				last_move = "previous";
+			}
+			ROW.previous();
+			expect(last_move).to(equal, "previous");
+		  });
+		});
+        describe("<row>.setAsCurrent()", function() {
+          it("sets the row as the current row", function() {
+			document.getElementById('L0005').setAsCurrent();
+			expect(ROW.current().id).to(equal, "L0005");
+		  });
+		});
+	  });
+    </script>
+</head>
+<body>
+<table id="first_table">
+<tr id="L0001"><td>a</td><td>b</td><td>c</td></tr>
+<tr id="L0002"><td>a</td><td>b</td><td>c</td></tr>
+<tr id="L0003"><td>a</td><td>b</td><td>c</td></tr>
+</table>
+<table>
+<tr id="L0004"><td>a</td><td>b</td><td>c</td></tr>
+<tr id="L0005"><td>a</td><td>b</td><td>c</td></tr>
+<tr id="L0006"><td>a</td><td>b</td><td>c</td></tr>
+</table>
+</body>
+</html>
