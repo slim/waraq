@@ -18,14 +18,16 @@ form {
 }
 label {
   display: block;
-  float: left;
   padding: 10px;
   background: white;
 }
-input {
+p label {
+  float: left;
+}
+input, textarea {
   display: block;
 }
-input:focus {
+input:focus, textarea:focus {
   background: yellow;
 }
 input[disabled] {
@@ -50,10 +52,12 @@ table * tr th {border: solid 1px grey; padding: 10px}
     margin: 5px;
     padding: 10px;
 }
-#entete_visible_de_loin {
+#entete {
 	position: fixed;
 	left: 0px;
 	top: 0px;
+}
+#entete h1 {
     clear: right;
     margin: 5px;
     padding: 10px;
@@ -67,6 +71,13 @@ table * tr th {border: solid 1px grey; padding: 10px}
 	padding: 5px;
 	border: 1px solid;
 	cursor: pointer;
+}
+#entete .bouton { 
+	border: 1px outset silver ; 
+	padding: 5px 10px; 
+	color: black; 
+	background-color: lightgrey; 
+	text-decoration:none;
 }
 .inactif {
 	color: black;
