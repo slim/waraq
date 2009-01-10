@@ -21,10 +21,11 @@ class DBEntry
 		$sql = "INSERT INTO $table ";
 		$sql .= "(". implode(',', array_keys($this->values)) .")";
 		$sql .= " VALUES ";
-		$sql .= "(". implode(',', $this->values) .")";
+		$sql .= "('". implode("','", $this->values) ."')";
+		return $sql;
 	}
 
-	static function export($values)
+	static function extract($values)
 	{
 		$entries = array();
 		foreach ($values as $key => $val) {
@@ -34,5 +35,6 @@ class DBEntry
 			}
 			$entries[$table]->set($column, $val);
 		}
+		return $entries;
 	}
 }
