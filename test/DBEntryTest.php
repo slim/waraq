@@ -23,9 +23,9 @@ class DBEntryTest extends PHPUnit_TestCase
 	function test_extract()
 	{
 		$values = array(
-			'table1.col1' => '11',
-			'table1.col2' => '12',
-			'table2.col1' => '21'
+			'table1:col1' => '11',
+			'table1:col2' => '12',
+			'table2:col1' => '21'
 		);
 
 		$entries = DBEntry::extract($values);

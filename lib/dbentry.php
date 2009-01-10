@@ -29,7 +29,7 @@ class DBEntry
 	{
 		$entries = array();
 		foreach ($values as $key => $val) {
-			list($table, $column) = explode('.', $key);
+			list($table, $column) = explode(':', $key);
 			if (!isset($entries[$table])) {
 				$entries[$table] = new DBEntry($table);
 			}
