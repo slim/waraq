@@ -3,7 +3,10 @@
 class Bug
 {
 	static $db;
+	public $id;
 	public $description;
+	public $reporter;
+	public $status;
 	
 	function __construct($desc)
 	{
@@ -13,7 +16,9 @@ class Bug
 	function toSQLinsert()
 	{
 		$desc = $this->description;
-		return "insert into bug (description) values ('$desc')";
+		$reporter = $this->reporter;
+		$date = date('c');
+		return "insert into bug (description, reporter, status, date_created) values ('$desc', '$reporter', 'new', '$date')";
 	}
 
 	function save()
