@@ -21,20 +21,30 @@
 
 table, tr, td, th {
        margin: 0px;
+	   padding: 5px;
        border-width: 0px;
        border-spacing: 0px;
        border-collapse: collapse;
+	   font-style: fixed;
+	   white-space: nowrap;
 }
-	table tr td {border: solid 1px silver; padding: 10px}
-	table tr th {border: solid 1px grey; padding: 10px}
-	#error {
-		background-color: yellow;
-		border: 2px solid red;
-		padding: 10px;
-		margin: 10px;
-	}
+table tr td {border: solid 1px silver;}
+table tr th {border: solid 1px grey;}
+#error {
+	background-color: yellow;
+	border: 2px solid red;
+	padding: 10px;
+	margin: 10px;
+}
+pre {
+	color: silver;
+	background-color: black;
+	padding: 10px;
+	margin: 10px;
+}
 </style>
 <?php
+	if ($_GET['debug']) echo "<pre>$query</pre>";
 	$result = mysql_query($query) or fatal_error('<b>SQL ERROR</b> ' . mysql_error()); 
 
 	$rows = array();
@@ -52,19 +62,19 @@ table, tr, td, th {
 </head>
 <body>
 <?php
-	echo "<table><tr>";
+	echo "<table><thead><tr>";
 	foreach ($columns as $c) {
 		echo "<th>$c</th>";
 	}
-	echo "</tr>";
+	echo "</tr></thead></tbody>";
 	foreach ($rows as $r) {
 		echo "<tr>";
 		foreach ($r as $value) {
-			echo "<td><pre>$value</pre></td>";
+			echo "<td>$value</td>";
 		}
 		echo "</tr>";
 	}
-	echo "</table>";
+	echo "</tbody></table>";
 ?>
 </body>
 </html>
