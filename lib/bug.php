@@ -68,6 +68,6 @@ class Bug
 	function assign($person, $date)
 	{
 		$id = $this->id;
-		self::$db->query("update bug set responsible='$person', target_date='$date' where id='$id'");
+		self::$db->query("update bug set responsible='$person', target_date='$date', status='assigned' where id='$id'");
 	}
 }
