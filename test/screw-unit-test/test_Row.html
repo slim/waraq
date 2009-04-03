@@ -15,14 +15,14 @@
       Screw.Unit(function() {
         describe("ROW.init()", function() {
 		  after(function() {
-			ROW.init();
+			ROW = new ElementList('tr');
 		  });
           it("finds all the rows with an id in the document", function() {
-			ROW.init();
+			ROW = new ElementList('tr');
 			expect(ROW.rows.length).to(equal, 6);
 		  });
           it("... or in the given table", function() {
-			ROW.init(document.getElementById('first_table'));
+			ROW = new ElementList('tr', document.getElementById('first_table'));
 			expect(ROW.rows.length).to(equal, 3);
 		  });
 		});
