@@ -14,12 +14,11 @@ var db = google.gears.factory.create('beta.database');
 db.open('database-test');
 db.execute('create table if not exists Test (Phrase text, Timestamp int)');
 
-sqlReplicator.master_url = '<?php echo $here->base()->get('spike-sqlreplicator.sql.php')->url ?>';
 sqlReplicator.slave_db = db;
 sqlReplicator.chunk_size = 4;
+sqlReplicator.set_master('<?php echo $here->base()->get('spike-sqlreplicator.sql.php')->url ?>');
 sqlReplicator.onComplete = function() {
-	sqlReplicator.master_pos = 0;
-	sqlReplicator.master_url = '<?php echo $here->base()->get('spike-sqlreplicator.sql.2')->url ?>';
+	sqlReplicator.set_master('<?php echo $here->base()->get('spike-sqlreplicator.sql.2')->url ?>');
 	sqlReplicator.pull();
 }
 

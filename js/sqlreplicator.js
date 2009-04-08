@@ -5,6 +5,11 @@ sqlReplicator = {
 	chunk_size: 100,
 	onComplete: null,
 
+	set_master: function(url) {
+		this.master_url = url;
+		this.master_pos = 0;
+		this.onComplete = null;
+	},
 	pull: function () {
 		new Ajax.Request(this.master_url, {
 			parameters: { l: this.master_pos+','+this.chunk_size },
