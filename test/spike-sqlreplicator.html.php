@@ -10,17 +10,16 @@
 </head>
 <body>
 <script type="text/javascript">
+var test_base = '<?php echo $here->base()->url ?>';
+
 var db = google.gears.factory.create('beta.database');
 db.open('database-test');
 db.execute('create table if not exists Test (Phrase text, Timestamp int)');
 
 sqlReplicator.slave_db = db;
 sqlReplicator.chunk_size = 4;
-sqlReplicator.set_master('<?php echo $here->base()->get('spike-sqlreplicator.sql.php')->url ?>');
-sqlReplicator.onComplete = function() {
-	sqlReplicator.set_master('<?php echo $here->base()->get('spike-sqlreplicator.sql.2')->url ?>');
-	sqlReplicator.pull();
-}
+sqlReplicator.set_master(test_base+'/spike-sqlreplicator.sql.php');
+sqlReplicator.set_master(test_base+'/spike-sqlreplicator.sql.2');
 
 var slave = {
 	show: function() {
