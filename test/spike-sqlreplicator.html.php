@@ -20,6 +20,9 @@ sqlReplicator.slave_db = db;
 sqlReplicator.chunk_size = 4;
 sqlReplicator.set_master(test_base+'/spike-sqlreplicator.sql.php');
 sqlReplicator.set_master(test_base+'/spike-sqlreplicator.sql.2');
+sqlReplicator.onComplete = function () {
+  			$('console').insert('TEMINE!\n');
+}
 
 var slave = {
 	show: function() {
