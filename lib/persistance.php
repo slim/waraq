@@ -4,8 +4,8 @@
 	{
 		public static function set_db($db);
 		public static function select($options = NULL);
+		public static function load();
 		public function save();
-		public function load();
 	}
 
 	interface sql

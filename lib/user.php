@@ -72,9 +72,8 @@ class User implements sql, persistance
 	    return $users;
     }
     
-    function load()
+    static function load($id)
   	{
-  		$id = $this->id;
   		list($user) = self::select("where id='$id'");
   		foreach ($user as $prop => $val) {
   			$this->$prop = $val;
