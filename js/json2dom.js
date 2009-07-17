@@ -10,6 +10,8 @@ JSON2DOM = {
 		return typeof(obj);
 	},
 	build: function (child, parent) {
+		var element;
+
 		switch (JSON2DOM.type(child)) {
 		case 'string':
 			parent.appendChild(document.createTextNode(child));
@@ -22,7 +24,7 @@ JSON2DOM = {
 		case 'array':
 			element = document.createElement(child[0]);
 			for (i=1; i < child.length ; i++) {
-				element = JSON2DOM.build(child[i], element);
+				JSON2DOM.build(child[i], element);
 			}
 			if (parent) {
 				parent.appendChild(element);
