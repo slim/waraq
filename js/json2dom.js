@@ -23,7 +23,7 @@ JSON2DOM = {
 			break;
 		case 'array':
 			element = document.createElement(child[0]);
-			for (i=1; i < child.length ; i++) {
+			for (var i=1; i < child.length ; i++) {
 				JSON2DOM.build(child[i], element);
 			}
 			if (parent) {
