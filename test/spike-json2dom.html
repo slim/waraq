@@ -6,7 +6,8 @@
 </head>
 <body>
 <script>
-	json_p = ["P", {style:"color:blue"}, "banjour"];
+	form = buildom(['form', {action:'http://www.google.com/search'}, ['label', 'Google ', ['input', {name:'q', type:'text'}]], ['button', {type:'submit'}, 'Search']]);
+	document.body.appendChild(form);
 </script>
 </body>
 </html>
