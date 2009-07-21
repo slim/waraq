@@ -1,50 +1,66 @@
-function ElementList(element, root) {
-	this.root = root || document.body;
-	this.rows = [];
-	this.current_row = null;
+function ElementList(elements) {
+	this.elements = [];
+	this.current_element = null;
 
-	var document_tables, document_rows;
+	if (elements) {
+		this.set_elements(elements);
+	}
 
-	document_rows = this.root.getElementsByTagName(element);
-	for (var r=0; r < document_rows.length; r++) {
-		if (document_rows[r].id) {
-			document_rows[r].ROW_index = this.rows.length;
-			document_rows[r].TRlist = this;
-			document_rows[r].setAsCurrent = function() {
-				this.TRlist.current_row = this.ROW_index;
+	this.set_elements = function (elements) {
+		for (var r=0, d=0; r < elements.length; r++) {
+			if (!elements[r].id) {
+				delete elements[r];
+				d++;
 			}
-			this.rows[document_rows[r].ROW_index] = document_rows[r];
+			else {
+				elements[r].element_index = r - d;
+				elements[r].element_list = this;
+				elements[r].setAsCurrent = function() {
+					this.element_list.current_element = this.element_index;
+				}
+			}
 		}
+		this.elements = elements;
+		return this;
+	}
+
+	this.select = function (tagName, rootNode) {
+		var root = rootNode || document.body;
+		var document_elements;
+
+		document_elements = root.getElementsByTagName(tagName);
+		return this.set_elements(document_elements);
 	}
 
 	this.first = function() {
-		this.current_row = 0;
+		this.current_element = 0;
 
-		return this.rows[this.current_row];
+		return this.elements[this.current_element];
 	};
 	this.current = function() {
-		return this.rows[this.current_row] || this.first();
+		return this.elements[this.current_element] || this.first();
 	};
 	this.next = function() {
-		if (this.current_row < this.rows.length - 1) {
-			this.current_row++;
+		if (this.current_element < this.elements.length - 1) {
+			this.current_element++;
 		}
 
 		if (this.onNext) {
 			this.onNext();
 		}
 
-		return this.rows[this.current_row];
+		return this.elements[this.current_element];
 	};
 	this.previous = function() {
-		if (this.current_row > 0 ) {
-			this.current_row--;
+		if (this.current_element > 0 ) {
+			this.current_element--;
 		}
 
 		if (this.onPrevious) {
 			this.onPrevious();
 		}
 
-		return this.rows[this.current_row];
+		return this.elements[this.current_element];
 	};
+
 }
