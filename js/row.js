@@ -26,9 +26,14 @@ function ElementList(elements) {
 
 	this.select = function (tagName, rootNode) {
 		var root = rootNode || document.body;
-		var document_elements;
+		var document_elements = [], tag_elements = [];
 
-		document_elements = root.getElementsByTagName(tagName);
+		for (var i=0; i < tagName.length; i++) {
+			tag_elements = root.getElementsByTagName(tagName[i]);
+			for (var j=0; j < tag_elements.length; j++) {
+				document_elements[document_elements.length] = tag_elements[j];
+			}
+		}
 		return this.set_elements(document_elements);
 	}
 
@@ -41,12 +46,17 @@ function ElementList(elements) {
 		return this.elements[this.current_element] || this.first();
 	};
 	this.next = function() {
-		if (this.current_element < this.elements.length - 1) {
-			this.current_element++;
+		if (this.current_element >= this.elements.length - 1) {
+			if (this.onLast) {
+				this.onLast();
+			}
+			return null;
 		}
-
-		if (this.onNext) {
-			this.onNext();
+		else {
+			this.current_element++;
+			if (this.onNext) {
+				this.onNext();
+			}
 		}
 
 		return this.elements[this.current_element];
