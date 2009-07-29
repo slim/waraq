@@ -25,16 +25,7 @@ function ElementList(elements) {
 	}
 
 	this.select = function (tagName, rootNode) {
-		var root = rootNode || document.body;
-		var document_elements = [], tag_elements = [];
-
-		for (var i=0; i < tagName.length; i++) {
-			tag_elements = root.getElementsByTagName(tagName[i]);
-			for (var j=0; j < tag_elements.length; j++) {
-				document_elements[document_elements.length] = tag_elements[j];
-			}
-		}
-		return this.set_elements(document_elements);
+		return this.set_elements(ElementList.select(tagName, rootNode));
 	}
 
 	this.first = function() {
@@ -73,4 +64,17 @@ function ElementList(elements) {
 		return this.elements[this.current_element];
 	};
 
+}
+
+ElementList.select = function function (tagName, rootNode) {
+	var root = rootNode || document.body;
+	var document_elements = [], tag_elements = [];
+
+	for (var i=0; i < tagName.length; i++) {
+		tag_elements = root.getElementsByTagName(tagName[i]);
+		for (var j=0; j < tag_elements.length; j++) {
+			document_elements[document_elements.length] = tag_elements[j];
+		}
+	}
+	return document_elements;
 }
