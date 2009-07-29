@@ -1,0 +1,20 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>clifform spike</title>
+	<script src="../js/prototype-1.6.0.3.js"></script>
+	<script src="../js/row.js"></script>
+	<script src="../js/clifform.js"></script>
+	<link rel="stylesheet" media="screen" href="../css/barred.css" type="text/css" />
+</head>
+<body>
+	<div id="messages_serveur"></div>
+<form id="test_form" action="http://www.google.com/search">
+<label id="q">Query <input name="q" type="text" /></label>
+<label id="hl1">Language <input name="hl" type="text" value="fr" /></label>
+<label id="hl2">Language (again)<input name="hl" type="text" value="fr" /></label>
+</form> 
+<script>
+CLIFFORM.swallow($('test_form')); 
+</script>
+</body>
+</html>
