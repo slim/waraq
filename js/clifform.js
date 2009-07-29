@@ -8,7 +8,7 @@ CLIFFORM = {
 				$(CLIFFORM.elements.current()).hide();
 				if (CLIFFORM.elements.next()) {
 					$(CLIFFORM.elements.current()).show();
-					$(CLIFFORM.elements.current()).focus();
+					CLIFFORM.elements.current().focus();
 				}
 				else {
 					CLIFFORM.form.submit();
@@ -23,7 +23,14 @@ CLIFFORM = {
 		while (CLIFFORM.elements.next() != null) {
 			$(CLIFFORM.elements.current()).hide();
 		}
+		CLIFFORM.elements.first();
+		CLIFFORM.enable();
+	},
+	enable: function () {
 		Event.observe(window, 'keypress', CLIFFORM.keyBinding);
-		CLIFFORM.elements.first().focus();
+		CLIFFORM.elements.current().focus();
+	},
+	disable: function () {
+		Event.stopObserving(window, 'keypress', CLIFFORM.keyBinding);
 	}
 }
