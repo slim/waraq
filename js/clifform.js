@@ -12,6 +12,7 @@ CLIFFORM = {
 				}
 				else {
 					CLIFFORM.form.submit();
+					CLIFFORM.form.reset();
 					CLIFFORM.elements.first();
 					$(CLIFFORM.elements.current()).show();
 					CLIFFORM.elements.current().focus();
@@ -36,11 +37,13 @@ CLIFFORM = {
 	disable: function () {
 		Event.stopObserving(window, 'keypress', CLIFFORM.keyBinding);
 	},
-	ajaxify: function (form) {
+	ajaxify: function (form, options) {
+		if (!options) {
+			var options = {};
+		}
+		options.parameters = $(form).serialize(true);
 		form.submit = function () {
-			new Ajax.Request(this.action, {
-				parameters: $(this).serialize(true)
-			});
+			new Ajax.Request(this.action, options);
 		}
 	}
 }
