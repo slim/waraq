@@ -8,16 +8,10 @@ function ElementList(elements) {
 
 	this.set_elements = function (elements) {
 		for (var r=0, d=0; r < elements.length; r++) {
-			if (!elements[r].id) {
-				delete elements[r];
-				d++;
-			}
-			else {
-				elements[r].element_index = r - d;
-				elements[r].element_list = this;
-				elements[r].setAsCurrent = function() {
-					this.element_list.current_element = this.element_index;
-				}
+			elements[r].element_index = r;
+			elements[r].element_list = this;
+			elements[r].setAsCurrent = function() {
+				this.element_list.current_element = this.element_index;
 			}
 		}
 		this.elements = elements;
