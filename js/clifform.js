@@ -1,38 +1,45 @@
 CLIFFORM = {
 	form: null,
-	elements: null,
+	table: null,
+	formfields: null,
+	tablecolumns: [],
 	keyBinding: function (e) {
 		var key = e.keyCode;
 		switch (key) {
 			case Event.KEY_RETURN:
-				$(CLIFFORM.elements.current()).hide();
-				if (CLIFFORM.elements.next()) {
-					$(CLIFFORM.elements.current()).show();
-					CLIFFORM.elements.current().focus();
+				$(CLIFFORM.formfields.current()).hide();
+				if (CLIFFORM.formfields.next()) {
+					$(CLIFFORM.formfields.current()).show();
+					CLIFFORM.formfields.current().focus();
 				}
 				else {
 					CLIFFORM.form.submit();
 					CLIFFORM.form.reset();
-					CLIFFORM.elements.first();
-					$(CLIFFORM.elements.current()).show();
-					CLIFFORM.elements.current().focus();
+					CLIFFORM.formfields.first();
+					$(CLIFFORM.formfields.current()).show();
+					CLIFFORM.formfields.current().focus();
 				}
 			break;
 		}
 	},
-	swallow: function (form) {
+	set_input: function (form) {
 		CLIFFORM.form = form;
-		CLIFFORM.elements = new ElementList;
-		CLIFFORM.elements.select(['label'], form);
-		while (CLIFFORM.elements.next() != null) {
-			$(CLIFFORM.elements.current()).hide();
+		CLIFFORM.formfields = new ElementList;
+		CLIFFORM.formfields.select(['label'], form);
+		while (CLIFFORM.formfields.next() != null) {
+			$(CLIFFORM.formfields.current()).hide();
 		}
-		CLIFFORM.elements.first();
+		CLIFFORM.formfields.first();
 		CLIFFORM.enable();
+	},
+	set_output: function (table, columns) {
+		this.table = table;
+		this.tablecolumns = columns;
+		return this;
 	},
 	enable: function () {
 		Event.observe(window, 'keypress', CLIFFORM.keyBinding);
-		CLIFFORM.elements.current().focus();
+		CLIFFORM.formfields.current().focus();
 	},
 	disable: function () {
 		Event.stopObserving(window, 'keypress', CLIFFORM.keyBinding);
@@ -45,5 +52,16 @@ CLIFFORM = {
 		form.submit = function () {
 			new Ajax.Request(this.action, options);
 		}
+	},
+	output: function (o) {
+		var row = document.createElement('tr');
+		for (var i=0; i < this.tablecolumns.length; i++) {
+			var property = this.tablecolumns[i];
+			var cell = document.createElement('td');
+			cell.innerHTML = o[property];
+			row.appendChild(cell);
+		}
+		this.table.tBodies[0].appendChild(row);
+		return row;
 	}
 }

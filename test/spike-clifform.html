@@ -9,6 +9,10 @@
 </head>
 <body>
 	<div id="messages_serveur" style="position: fixed; right: 3px; bottom: 3px;"></div>
+<table id="output_table">
+<thead><tr><th>User Name</th><th>User Mail address</th></tr></thead>
+<tbody></tbody>
+</table>
 <form id="test_form" action="spike-clifform.json">
 <label>Query <input name="q" type="text" /></label>
 <label>Language <input name="hl" type="text" value="fr" /></label>
@@ -18,8 +22,18 @@
 <button onclick="CLIFFORM.disable()">Stop handling RETURN</button>
 <script>
 Notification.area = $('messages_serveur');
-CLIFFORM.ajaxify($('test_form'), {onSuccess: function () { new Notification('OK'); }}); 
-CLIFFORM.swallow($('test_form')); 
+CLIFFORM.ajaxify($('test_form'), {
+	onSuccess: function (transport) { 
+		var person = transport.responseText.evalJSON();
+		var row = CLIFFORM.output(person); 
+		row.id = person.id;
+		new Notification('OK');
+	}
+}); 
+CLIFFORM.set_input($('test_form')); 
+CLIFFORM.set_output($('output_table'), ['name', 'email']);
+hassen = {name:'Hassen Marzouki', email:'hassen@alixsys.com'};
+CLIFFORM.output(hassen);
 </script>
 </body>
 </html>
