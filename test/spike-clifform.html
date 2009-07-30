@@ -8,7 +8,7 @@
 </head>
 <body>
 	<div id="messages_serveur"></div>
-<form id="test_form" action="http://www.google.com/search">
+<form id="test_form" action="spike-clifform.json">
 <label id="q">Query <input name="q" type="text" /></label>
 <label id="hl1">Language <input name="hl" type="text" value="fr" /></label>
 <label id="hl2">Language (again)<input name="hl" type="text" value="fr" /></label>
@@ -16,6 +16,7 @@
 <button onclick="CLIFFORM.enable()">Handle RETURN</button>
 <button onclick="CLIFFORM.disable()">Stop handling RETURN</button>
 <script>
+CLIFFORM.ajaxify($('test_form')); 
 CLIFFORM.swallow($('test_form')); 
 </script>
 </body>

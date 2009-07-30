@@ -32,5 +32,12 @@ CLIFFORM = {
 	},
 	disable: function () {
 		Event.stopObserving(window, 'keypress', CLIFFORM.keyBinding);
+	},
+	ajaxify: function (form) {
+		form.submit = function () {
+			new Ajax.Request(this.action, {
+				parameters: $(this).serialize(true)
+			});
+		}
 	}
 }
