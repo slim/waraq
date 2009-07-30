@@ -12,6 +12,9 @@ CLIFFORM = {
 				}
 				else {
 					CLIFFORM.form.submit();
+					CLIFFORM.elements.first();
+					$(CLIFFORM.elements.current()).show();
+					CLIFFORM.elements.current().focus();
 				}
 			break;
 		}
