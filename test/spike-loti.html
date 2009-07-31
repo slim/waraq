@@ -1,0 +1,42 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>LOTI spike</title>
+	<script src="../js/prototype-1.6.0.3.js"></script>
+	<script src="../js/row.js"></script>
+	<script src="../js/mode.js"></script>
+	<script src="../js/json2dom.js"></script>
+	<script src="../js/notification.js"></script>
+	<script src="../js/loti.js"></script>
+	<link rel="stylesheet" media="screen" href="../css/barred.css" type="text/css" />
+</head>
+<body>
+	<div id="messages_serveur" style="position: fixed; right: 3px; bottom: 3px;"></div>
+<form id="test_form" action="">
+<p>Language <input name="hl" id="hl" type="text" value="fr" /></p>
+</form> 
+<script>
+Notification.area = $('messages_serveur');
+alert = function (message) { new Notification(message); };
+
+function clearKeys(keys) {
+    var old_handler;
+    old_handler = document.onkeypress;
+    document.onkeypress = function(e) {
+        var cleared = keys;
+        for (key in cleared) {
+            if (e.keyCode == cleared[key]) return false;
+        }
+        if (old_handler) {
+            old_handler();
+        }
+    }
+}
+
+Event.KEY_F10 = 121;
+
+clearKeys([Event.KEY_RETURN, Event.KEY_ESC, Event.KEY_F10]);
+
+lang_select = new Loti($('hl'), 'spike-loti.xml');
+</script>
+</body>
+</html>
