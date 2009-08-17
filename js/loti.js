@@ -9,11 +9,15 @@ function Loti(input, url) {
 	this.asSelect = function () {
 		$(this.select).show();
 		$(this.input).hide();
+		this.input.disabled='disabled';
+		this.select.disabled='';
 		this.select.focus();
 	}
 	this.asInput = function () {
 		$(this.input).show();
 		$(this.select).hide();
+		this.input.disabled='';
+		this.select.disabled='disabled';
 		this.input.focus();
 	}
 	this.search = function () {
