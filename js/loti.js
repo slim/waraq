@@ -24,13 +24,13 @@ function Loti(input, url) {
 	Event.observe(this.select, 'focus', function (e) { e.element().loti.enable();});
 	Event.observe(this.select, 'blur', function (e) { e.element().loti.disable(); });
 	this.keyBinding = function (e) {
-		var key = e.keyCode;
+		var key = e.charCode || e.keyCode; 
 		switch (key) {
-			case Event.KEY_RETURN:
+			case Loti.KEY_SEARCH:
 				Loti.current.search();
 				Loti.current.asSelect();
 			break;
-			case Event.KEY_ESC:
+			case Loti.KEY_INPUT:
 				Loti.current.asInput();
 			break;
 		}
@@ -43,3 +43,5 @@ function Loti(input, url) {
 		Event.stopObserving(window, 'keypress', this.keyBinding);
 	}
 }
+Loti.KEY_SEARCH = Event.KEY_RETURN;
+Loti.KEY_INPUT = Event.KEY_ESC;
