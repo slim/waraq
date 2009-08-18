@@ -6,12 +6,14 @@ function Loti(input, url) {
 	this.input.parentNode.appendChild(this.select);
 	this.select.loti = this;
 	$(this.select).hide();
+	this.onSelect = {};
 	this.asSelect = function () {
 		$(this.select).show();
 		$(this.input).hide();
 		this.input.disabled='disabled';
 		this.select.disabled='';
 		this.select.focus();
+		if (this.onSelect) this.onSelect();
 	}
 	this.asInput = function () {
 		$(this.input).show();
