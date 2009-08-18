@@ -7,7 +7,7 @@ function ElementList(elements) {
 	}
 
 	this.set_elements = function (elements) {
-		for (var r=0, d=0; r < elements.length; r++) {
+		for (var r=0; r < elements.length; r++) {
 			elements[r].element_index = r;
 			elements[r].element_list = this;
 			elements[r].setAsCurrent = function() {
@@ -60,7 +60,7 @@ function ElementList(elements) {
 
 }
 
-ElementList.select = function function (tagName, rootNode) {
+ElementList.select = function (tagName, rootNode) {
 	var root = rootNode || document.body;
 	var document_elements = [], tag_elements = [];
 
@@ -71,4 +71,9 @@ ElementList.select = function function (tagName, rootNode) {
 		}
 	}
 	return document_elements;
+}
+
+ROW = new ElementList;
+ROW.init = function (table) {
+	ROW.select(['tr'], table);
 }
