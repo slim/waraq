@@ -13,37 +13,53 @@
     <script src="../../js/row.js"></script>
     <script type="text/javascript">
       Screw.Unit(function() {
-        describe("ROW.init()", function() {
-		  after(function() {
-			ROW = new ElementList('tr');
+        describe("ROW.select()", function() {
+		  before(function() {
+			ROW = new ElementList;
 		  });
           it("finds all the rows with an id in the document", function() {
-			ROW = new ElementList('tr');
-			expect(ROW.rows.length).to(equal, 6);
+			ROW.select(['tr']);
+			expect(ROW.elements.length).to(equal, 6);
 		  });
           it("... or in the given table", function() {
-			ROW = new ElementList('tr', document.getElementById('first_table'));
-			expect(ROW.rows.length).to(equal, 3);
+			ROW.select(['tr'], document.getElementById('first_table'));
+			expect(ROW.elements.length).to(equal, 3);
+		  });
+          it("finds inputs in a form (including textarea)", function() {
+			ROW.select(['input', 'textarea'], document.getElementById('search_form'));
+			expect(ROW.elements.length).to(equal, 3);
 		  });
 		});
         describe("ROW.first()", function() {
+		  before(function() {
+			ROW = new ElementList;
+			ROW.select(['tr']);
+		  });
           it("fires init() if (and only if) the document rows are not linked", function() {
 			ROW.first();
-			expect(ROW.rows.length).to(equal, 6);
+			expect(ROW.elements.length).to(equal, 6);
 			ROW.first();
-			expect(ROW.rows.length).to(equal, 6);
+			expect(ROW.elements.length).to(equal, 6);
 		  });
           it("gives the first row in the document", function() {
 			expect(ROW.first().id).to(equal, "L0001");
 		  });
 		});
         describe("ROW.current()", function() {
+		  before(function() {
+			ROW = new ElementList;
+			ROW.select(['tr']);
+		  });
           it("gives the currently selected row", function() {
 			expect(ROW.current().id).to(equal, "L0001");
 		  });
 		});
         describe("ROW.next()", function() {
-			var last_move = null;
+		  before(function() {
+			ROW = new ElementList;
+			ROW.select(['tr']);
+		  });
+		  var last_move = null;
           it("sets the current row to the next row and returns it", function() {
 			expect(ROW.next().id).to(equal, "L0002");
 			expect(ROW.current().id).to(equal, "L0002");
@@ -59,7 +75,15 @@
 		  });
 		});
         describe("ROW.previous()", function() {
-			var last_move = null;
+		  before(function() {
+			ROW = new ElementList;
+			ROW.select(['tr']);
+			ROW.next();
+			ROW.next();
+			ROW.next();
+			ROW.next();
+		  });
+		  var last_move = null;
           it("sets the current row to the previous row and returns it", function() {
 			expect(ROW.previous().id).to(equal, "L0004");
 			expect(ROW.current().id).to(equal, "L0004");
@@ -73,6 +97,10 @@
 		  });
 		});
         describe("<row>.setAsCurrent()", function() {
+		  before(function() {
+			ROW = new ElementList;
+			ROW.select(['tr']);
+		  });
           it("sets the row as the current row", function() {
 			document.getElementById('L0005').setAsCurrent();
 			expect(ROW.current().id).to(equal, "L0005");
@@ -92,5 +120,11 @@
 <tr id="L0005"><td>a</td><td>b</td><td>c</td></tr>
 <tr id="L0006"><td>a</td><td>b</td><td>c</td></tr>
 </table>
+<form id="search_form" action="http://www.google.com/search" >
+<label>Search <input name="q" type="text" /></label>
+<label>Language <input name="hl" type="text" value="fr" /></label>
+<label>Other <textarea name="o"></textarea></label>
+<button type="submit">Search</button>
+</form>
 </body>
 </html>

@@ -1,0 +1,69 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>clifform spike</title>
+	<script src="../js/prototype-1.6.0.3.js"></script>
+	<script src="../js/row.js"></script>
+	<script src="../js/notification.js"></script>
+	<script src="../js/json2dom.js"></script>
+	<script src="../js/clifform.js"></script>
+	<script src="../js/loti.js"></script>
+	<link rel="stylesheet" media="screen" href="../css/barred.css" type="text/css" />
+</head>
+<body>
+	<div id="messages_serveur" style="position: fixed; right: 3px; bottom: 3px;"></div>
+<table id="output_table">
+<thead><tr><th>User Name</th><th>User Mail address</th></tr></thead>
+<tbody></tbody>
+</table>
+<form id="test_form" action="spike-clifform.json">
+<label>Query <input id="q" name="q" type="text" /></label>
+<label>Language <input name="hl" type="text" value="fr" /></label>
+<label>Language (again)<input name="hl" type="text" value="fr" /></label>
+</form> 
+<button onclick="CLIFFORM.enable()">Handle RETURN</button>
+<button onclick="CLIFFORM.disable()">Stop handling RETURN</button>
+<script>
+Notification.area = $('messages_serveur');
+alert = function (message) { new Notification(message); };
+
+function clearKeys(keys) {
+    var old_handler;
+    old_handler = document.onkeypress;
+    document.onkeypress = function(e) {
+        var cleared = keys;
+        for (key in cleared) {
+            if (e.keyCode == cleared[key]) return false;
+        }
+        if (old_handler) {
+            old_handler();
+        }
+    }
+}
+
+Event.KEY_F10 = 121;
+
+clearKeys([Event.KEY_RETURN, Event.KEY_ESC, Event.KEY_F10]);
+
+
+CLIFFORM.ajaxify($('test_form'), {
+	onSuccess: function (transport) { 
+		var person = transport.responseText.evalJSON();
+		var row = CLIFFORM.output(person); 
+		row.id = person.id;
+		new Notification('OK');
+	}
+}); 
+
+CLIFFORM.set_input($('test_form')); 
+CLIFFORM.disable();
+CLIFFORM.set_output($('output_table'), ['name', 'email']);
+
+hassen = {name:'Hassen Marzouki', email:'hassen@alixsys.com'};
+CLIFFORM.output(hassen);
+
+query = new Loti($('q'), 'spike-loti.xml');
+query.enable();
+query.onSelect = function () { query.disable(); CLIFFORM.enable(); };
+</script>
+</body>
+</html>

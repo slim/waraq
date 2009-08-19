@@ -1,0 +1,40 @@
+<html>
+<head>
+    <script src="lib/jquery-1.2.3.js"></script>
+    <script src="lib/jquery.fn.js"></script>
+    <script src="lib/jquery.print.js"></script>
+    <script src="lib/screw.builder.js"></script>
+    <script src="lib/screw.matchers.js"></script>
+    <script src="lib/screw.events.js"></script>
+    <script src="lib/screw.behaviors.js"></script>
+    <script src="lib/screw.mock.js"></script>
+    <link rel="stylesheet" href="lib/screw.css">
+    
+    <script type="text/javascript" src="../../js/json2dom.js"> </script>
+    <script type="text/javascript">
+      Screw.Unit(function() {
+        describe("buildom()", function() {
+		  var paragraph;
+
+		  paragraph = buildom(['P', 'test', {style:'color:blue'}]);
+          it("converts ['P', 'test', {style:'color:blue'}] to <p>test</p>", function() {
+			expect(paragraph.nodeType).to(equal, Node.ELEMENT_NODE);
+			expect(paragraph.nodeName).to(equal, 'P');
+			expect(paragraph.textContent).to(equal, 'test');
+			expect(paragraph.style.color).to(equal, 'blue');
+		  });
+		  form = buildom(['form', {action:'http://www.google.com/search'}, ['label', 'Google ', ['input', {name:'q', type:'text'}]], ['button', {type:'submit'}, 'Search']]);
+          it("creates a form", function() {
+			expect(form.nodeType).to(equal, Node.ELEMENT_NODE);
+			expect(form.nodeName).to(equal, 'FORM');
+			expect(form.getAttribute('action')).to(equal, 'http://www.google.com/search');
+			expect(form.elements[0].nodeType).to(equal, Node.ELEMENT_NODE);
+			expect(form.elements[0].nodeName).to(equal, 'INPUT');
+		  });
+		});
+	  });
+    </script>
+</head>
+<body>
+</body>
+</html>
