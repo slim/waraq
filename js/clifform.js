@@ -48,6 +48,7 @@ CLIFFORM = {
 		if (!options) {
 			var options = {};
 		}
+		options.method = form.method;
 		form.submit = function () {
 			options.parameters = $(form).serialize(true);
 			new Ajax.Request(this.action, options);
