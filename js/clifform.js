@@ -59,6 +59,7 @@ CLIFFORM = {
 		for (var i=0; i < this.tablecolumns.length; i++) {
 			var property = this.tablecolumns[i];
 			var cell = document.createElement('td');
+			cell.setAttribute('class', property);
 			cell.innerHTML = o[property];
 			row.appendChild(cell);
 		}
