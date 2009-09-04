@@ -1,12 +1,21 @@
-function Loti(input, url) {
-	var search_url = url;
+SelectOption = function (data) {
+	this.value = data[SelectOption.mapping.value];
+	this.display = data[SelectOption.mapping.display];
+	this.toDom = function () {
+		return buildom(['option', {value: this.value}, this.display]);
+	}
+}
+SelectOption.mapping = {};
+function Loti(input, json_resource) {
+	var search_url = json_resource.url;
+	SelectOption.mapping = {display: json_resource.display, value: json_resource.value};
 	this.input = input;
 	this.input.loti = this;
 	this.select = buildom(['select', {name: input.name}]);
 	this.input.parentNode.appendChild(this.select);
 	this.select.loti = this;
 	$(this.select).hide();
-	this.onSelect = {};
+	this.onSelect = null;
 	this.asSelect = function () {
 		$(this.select).show();
 		$(this.input).hide();
@@ -23,7 +32,18 @@ function Loti(input, url) {
 		this.input.focus();
 	}
 	this.search = function () {
-		new Ajax.Updater(this.select, search_url, { method: 'get', parameters: {q: this.input.value}});
+		new Ajax.Request(search_url, { 
+			method: 'get', 
+			parameters: {q: this.input.value}, 
+			onSuccess: (function (transport) {
+				this.select.innerHTML="";
+				var data = transport.responseText.evalJSON();
+				for (var i=0; i < data.length ; i++) {
+					var so = new SelectOption(data[i]);
+					$(this.select).insert(so.toDom());
+				}
+		 	}).bind(this)
+		});
 	}
 	Event.observe(this.input, 'focus', function (e) { e.element().loti.enable(); });
 	Event.observe(this.input, 'blur', function (e) { e.element().loti.disable();  });

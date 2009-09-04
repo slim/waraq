@@ -2,8 +2,6 @@
 <head>
 	<title>LOTI spike</title>
 	<script src="../js/prototype-1.6.0.3.js"></script>
-	<script src="../js/row.js"></script>
-	<script src="../js/mode.js"></script>
 	<script src="../js/json2dom.js"></script>
 	<script src="../js/notification.js"></script>
 	<script src="../js/loti.js"></script>
@@ -36,7 +34,7 @@ Event.KEY_F10 = 121;
 
 clearKeys([Event.KEY_RETURN, Event.KEY_ESC, Event.KEY_F10]);
 
-lang_select = new Loti($('hl'), 'spike-loti.xml');
+lang_select = new Loti($('hl'), {url: 'spike-loti.json', display: 'lang', value: 'code'});
 </script>
 </body>
 </html>

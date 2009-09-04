@@ -48,6 +48,7 @@ CLIFFORM = {
 		if (!options) {
 			var options = {};
 		}
+		options.method = form.method;
 		form.submit = function () {
 			options.parameters = $(form).serialize(true);
 			new Ajax.Request(this.action, options);
@@ -58,6 +59,7 @@ CLIFFORM = {
 		for (var i=0; i < this.tablecolumns.length; i++) {
 			var property = this.tablecolumns[i];
 			var cell = document.createElement('td');
+			cell.setAttribute('class', property);
 			cell.innerHTML = o[property];
 			row.appendChild(cell);
 		}
