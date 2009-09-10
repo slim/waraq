@@ -1,5 +1,5 @@
 <?php
-	require "localresource.php";
+	require_once "localresource.php";
 
 class ResourceRevision extends LocalResource
 {
