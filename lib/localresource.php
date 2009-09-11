@@ -27,7 +27,9 @@
 		function base()
 		{
 			$f = ereg_replace('/[^/]+$', '/', $this->file);
-			$u = ereg_replace('/[^/]+$', '/', $this->url);
+			$u = ereg_replace('\?.*$', '', $this->url);
+			$u = ereg_replace('#.*$', '', $u);
+			$u = ereg_replace('/[^/]+$', '/', $u);
 			$r = new LocalResource($u, $f);
 
 			return $r;

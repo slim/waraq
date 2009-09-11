@@ -10,6 +10,8 @@ class ResourceRevision extends LocalResource
 
 	public $date;
 	public $origin;
+	public $mimetype;
+	public $encoding;
 	public $hash;
 	public $id;
 
@@ -24,11 +26,11 @@ class ResourceRevision extends LocalResource
 	{
 		$this->hash = md5($content);
 		if ($this->id) {
-			$name = $this->id .'-'. $this->hash;
+			$name = $this->mimetype .'/'. $this->charset .'/'. $this->id .'-'. $this->hash;
 		}
 		else {
 			$this->id = $this->hash;
-			$name = $this->hash;
+			$name = $this->mimetype .'/'. $this->charset .'/'. $this->hash;
 		}
 		$this->file = self::$root->get($name)->file;
 		$this->url = self::$root->get($name)->url;
@@ -61,9 +63,11 @@ class ResourceRevision extends LocalResource
 	{
 		$id = "'". $this->id ."'";
 		$md5 = "'". $this->hash ."'";
+		$mimetype = "'". $this->mimetype ."'";
+		$charset = "'". $this->charset ."'";
 		$origin = "'". $this->origin ."'";
 		$date = "'". $this->date ."'";
-		self::$db->query("insert into revisions (id, md5, origin, date) values ($id, $md5, $origin, $date)");
+		self::$db->query("insert into revisions (id, md5, mimetype, charset, origin, date) values ($id, $md5, $mimetype, $charset, $origin, $date)");
 	}
 
 	function pull_content()
@@ -75,6 +79,9 @@ class ResourceRevision extends LocalResource
 		curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
 		curl_setopt ($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
 		$content = curl_exec($ch);
+		$content_type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+		list($this->mimetype, $this->charset) = explode(';', $content_type);
+		list(,$this->charset) = explode('=', $this->charset);
 
 		return $content;
 	}
