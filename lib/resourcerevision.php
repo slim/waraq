@@ -54,6 +54,8 @@ class ResourceRevision extends LocalResource
 			$p = new ResourceRevision($origin, $id);
 			$p->hash = $u['md5'];
 			$p->date = $u['date'];
+			$p->mimetype = $u['mimetype'];
+			$p->charset = $u['charset'];
 			array_push($resources , $p);
 		}
 
