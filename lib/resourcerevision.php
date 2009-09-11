@@ -11,7 +11,7 @@ class ResourceRevision extends LocalResource
 	public $date;
 	public $origin;
 	public $mimetype;
-	public $encoding;
+	public $charset;
 	public $hash;
 	public $id;
 
@@ -20,6 +20,8 @@ class ResourceRevision extends LocalResource
 		$this->id = $id;
 		$this->date = date("c");
 		$this->origin = $origin;
+		$this->mimetype = "text/html";
+		$this->charset = "iso-8859-1";
 	}
 
 	function content($content)
@@ -80,8 +82,10 @@ class ResourceRevision extends LocalResource
 		curl_setopt ($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
 		$content = curl_exec($ch);
 		$content_type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
-		list($this->mimetype, $this->charset) = explode(';', $content_type);
-		list(,$this->charset) = explode('=', $this->charset);
+		list($mimetype, $charset) = explode(';', $content_type);
+		list(,$charset) = explode('=', $this->charset);
+		if ($mimetype) $this->mimetype = $mimetype;
+		if ($charset) $this->charset = $charset;
 
 		return $content;
 	}
