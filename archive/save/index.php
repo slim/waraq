@@ -9,6 +9,6 @@
 $rr = new ResourceRevision($_GET['url']);
 $base_url = dirname($_GET['url'] .'x');
 ResourceRevision::add_to_head_start("<base href='$base_url' />");
-$rr->commit();
+$rr->commit("New version of ". $_GET['title']);
 
 header("Location: ". $rr->url, TRUE, 307);

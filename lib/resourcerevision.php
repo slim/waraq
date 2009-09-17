@@ -14,6 +14,7 @@ class ResourceRevision extends LocalResource
 	public $charset;
 	public $hash;
 	public $id;
+	public $comment;
 
 	function __construct($origin, $id = NULL)
 	{
@@ -56,6 +57,7 @@ class ResourceRevision extends LocalResource
 			$p->date = $u['date'];
 			$p->mimetype = $u['mimetype'];
 			$p->charset = $u['charset'];
+			$p->comment = $u['comment'];
 			array_push($resources , $p);
 		}
 
@@ -71,7 +73,8 @@ class ResourceRevision extends LocalResource
 		$charset = "'". $this->charset ."'";
 		$origin = "'". $this->origin ."'";
 		$date = "'". $this->date ."'";
-		self::$db->query("insert into revisions (id, md5, mimetype, charset, origin, date) values ($id, $md5, $mimetype, $charset, $origin, $date)");
+		$comment = "'". $this->comment ."'";
+		self::$db->query("insert into revisions (id, md5, mimetype, charset, origin, date, comment) values ($id, $md5, $mimetype, $charset, $origin, $date , $comment)");
 	}
 
 	function pull_content()
@@ -113,8 +116,9 @@ class ResourceRevision extends LocalResource
 		return $content;
 	}
 
-	function commit()
+	function commit($message = "")
 	{
+		$this->comment = $message;
 		$content = self::process_content($this->pull_content());
 		$this->content($content);
 		$revision = fopen($this->file, "w");

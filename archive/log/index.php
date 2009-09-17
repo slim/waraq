@@ -14,11 +14,11 @@ $revisions = ResourceRevision::select("group by md5 order by date desc limit 100
 </head>
 <body>
 <table>
-<thead><tr><th>revision</th><th>date</th><th>origin</th></tr></thead>
+<thead><tr><th>revision</th><th>comment</th><th>date</th><th>origin</th></tr></thead>
 <tbody>
 <?php foreach ($revisions as $r) {
 		$url = ResourceRevision::$root->url."/".$r->mimetype."/".$r->charset."/".$r->hash;
-		print "<tr><td><a href='$url'>".$r->id."</a></td><td>".$r->date."</td><td><a href='".$r->origin."'>go</a></td></tr>";
+		print "<tr><td><a href='$url'>".$r->id."</a></td><td>".$r->comment ."</td><td>".$r->date."</td><td><a href='".$r->origin."'>go</a></td></tr>";
 	} ?>
 </tbody>
 </table>
