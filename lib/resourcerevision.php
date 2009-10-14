@@ -77,7 +77,7 @@ class ResourceRevision extends LocalResource
 		self::$db->query("insert into revisions (id, md5, mimetype, charset, origin, date, comment) values ($id, $md5, $mimetype, $charset, $origin, $date , $comment)");
 	}
 
-	function pull_content()
+	function pull_content($user = NULL, $password = NULL)
 	{
 		$ch = curl_init();
 		$timeout = 15; // set to zero for no timeout
@@ -85,6 +85,9 @@ class ResourceRevision extends LocalResource
 		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
 		curl_setopt ($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+		if ($user) {
+			curl_setopt ($ch, CURLOPT_USERPWD, $user.":".$password);
+		}
 		$content = curl_exec($ch);
 		$content_type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
 		list($mimetype, $charset) = explode(';', $content_type);
@@ -116,10 +119,10 @@ class ResourceRevision extends LocalResource
 		return $content;
 	}
 
-	function commit($message = "")
+	function commit($message = "", $user = NULL, $password = NULL)
 	{
 		$this->comment = $message;
-		$content = self::process_content($this->pull_content());
+		$content = self::process_content($this->pull_content($user, $password));
 		$this->content($content);
 		$revision = fopen($this->file, "w");
 		if (! fwrite($revision, $content)) {
