@@ -1,0 +1,22 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Autocomplete spike</title>
+	<script src="../js/prototype-1.6.0.3.js"></script>
+	<script src="../js/autocomplete.js"></script>
+	<script src="../js/notification.js"></script>
+	<link rel="stylesheet" media="screen" href="../css/barred.css" type="text/css" />
+	<link rel="stylesheet" media="screen" href="../css/autocomplete.css" type="text/css" />
+</head>
+<body>
+	<div id="messages_serveur" style="position: fixed; right: 3px; bottom: 3px;"></div>
+<form id="test_form" action="">
+<p>Countries (press "T" case sensitive)<input name="hl" id="hl" type="text" /></p>
+</form> 
+<script>
+Notification.area = $('messages_serveur');
+alert = function (message) { new Notification(message); };
+
+new Autocomplete('hl', { serviceUrl:'countries.json' });
+</script>
+</body>
+</html>
