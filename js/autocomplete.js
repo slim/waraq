@@ -223,13 +223,13 @@ Autocomplete.prototype = {
     var response;
     try {
       response = xhr.responseText.evalJSON();
-      if (!Object.isArray(response.data)) { response.data = []; }
     } catch (err) { return; }
-    this.suggestions = response.suggestions;
-    this.data = response.data;
+	for (var i=0; i < response.length; i++) {
+		this.suggestions[i] = response[i][this.options.valueProp];
+	}
+    this.data = response;
     this.cachedResponse[response.query] = response;
-    if (response.suggestions.length === 0) { this.badQueries.push(response.query); }
-    if (response.query === this.currentValue) { this.suggest(); }
+    this.suggest();
   },
 
   activate: function(index) {
