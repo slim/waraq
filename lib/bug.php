@@ -62,6 +62,11 @@ class Bug
 
 	function save()
 	{
+		return $this->insert();
+	}
+
+	function insert()
+	{
 		self::$db->query($this->toSQLinsert());
 	}
 

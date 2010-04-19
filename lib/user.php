@@ -64,7 +64,7 @@ class User implements sql, persistance
 	   	foreach ($result as $entry) {
 	   		$user = new User($entry['id']);
 	   		$user->password = $entry['password'];
-       		$user->nom = $entry['nom'];
+       		$user->name = $entry['name'];
        		$user->email = $entry['email'];
 
 	   		$users [] = $user;   
@@ -75,18 +75,20 @@ class User implements sql, persistance
     static function load($id)
   	{
   		list($user) = self::select("where id='$id'");
-  		foreach ($user as $prop => $val) {
-  			$this->$prop = $val;
-  		}
-  		return $this;
+  		return $user;
   	}
   	
-    public function save()		
+    public function insert()		
     {
       $query = $this->toSQLinsert();
       self::$db->exec($query);
       return $this;		   
     }
+
+    public function save()		
+    {
+		return $this->insert();
+	}
         
 	function isAuthentic()
 	{
