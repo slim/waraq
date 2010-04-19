@@ -25,6 +25,18 @@ class DBEntry
 		return $sql;
 	}
 
+	static function extract_table($table, $table_name) {
+		$entries = array();
+		foreach ($table as $row) {
+			$e = new DBEntry($table_name);
+			foreach ($row as $column => $value) {
+				$e->set($column, $value);
+			}
+			$entries []= $e;
+		}
+		return $entries;
+	}
+
 	static function extract($values)
 	{
 		$entries = array();

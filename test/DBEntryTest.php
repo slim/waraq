@@ -57,6 +57,20 @@ class DBEntryTest extends PHPUnit_TestCase
 		$this->assertEquals(1, $this->DBEntry->values['col1']);
 		$this->assertEquals(2, $this->DBEntry->values['col2']);
 	}
+	function test_extract_table()
+	{
+		$table = array(
+			array('col1' => '11', 'col2' => '12'),
+			array('col1' => '21', 'col2' => '22')
+		);
+
+		$entries = DBEntry::extract_table($table, 'table1');
+        $this->assertEquals(2, count($entries), "entries count");
+        $this->assertTrue($entries[0] instanceof DBEntry, "first element is a DBEntry");
+        $this->assertEquals('table1', $entries[0]->table, "entries table name");
+		$this->assertEquals(11, $entries[0]->values['col1'], "entry 0 col 1");
+		$this->assertEquals(12, $entries[0]->values['col2'], "entry 0 col 2");
+	}
 }
 // Running the test.
 $suite  = new PHPUnit_TestSuite('DBEntryTest');
