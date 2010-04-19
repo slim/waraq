@@ -39,6 +39,24 @@ class DBEntryTest extends PHPUnit_TestCase
 		$expected = "INSERT INTO table1 (col1,col2) VALUES ('1','2')";
 		$this->assertEquals($expected, $this->DBEntry->toSQLinsert());
 	}
+	function test_setProperties()
+	{
+		$object = new StdClass;
+		$this->DBEntry->values = array('col1' => '1', 'col2' => '2');
+		$this->DBEntry->setProperties($object);
+		$this->assertEquals(1, $object->col1);
+		$this->assertEquals(2, $object->col2);
+	}
+	function test_getProperties()
+	{
+		$object = new StdClass;
+		$object->col1 = 1;
+		$object->col2 = 2;
+		$this->DBEntry->getProperties($object);
+        $this->assertEquals(2, count($this->DBEntry->values));
+		$this->assertEquals(1, $this->DBEntry->values['col1']);
+		$this->assertEquals(2, $this->DBEntry->values['col2']);
+	}
 }
 // Running the test.
 $suite  = new PHPUnit_TestSuite('DBEntryTest');

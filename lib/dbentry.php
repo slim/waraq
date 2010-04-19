@@ -37,4 +37,16 @@ class DBEntry
 		}
 		return $entries;
 	}
+
+	function setProperties($object) {
+		foreach ($this->values as $key => $value) {
+			$object->$key = $value;
+		}
+	}
+
+	function getProperties($object) {
+		foreach ($object as $key => $value) {
+			$this->values[$key] = $value;
+		}
+	}
 }
