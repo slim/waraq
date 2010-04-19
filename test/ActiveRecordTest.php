@@ -4,9 +4,10 @@
 define("ROOT", '..');
 	require ROOT ."/ini.php";
 	require ROOT ."/lib/activerecord.php";
+	require ROOT ."/lib/persistance.php";
 	ActiveRecord::$db = new PDO($ini['db']); 
 
-class User
+class User implements persistance
 {
 	static $table;
 
@@ -14,12 +15,24 @@ class User
 	{
 		print $this->name ." : Aya golna slam3likom <br />";
 	}
+
+	function insert()
+	{
+		return self::$table->insert($this);
+	}
+
+	static function select($options = NULL)
+	{
+		return self::$table->select($options);
+	}
+
 } User::$table = new ActiveRecord("users", "User");
-$users = User::$table->select();
+
+$users = User::select();
 foreach ($users as $u) {
 	$u->gul_assalam();
 	$u->name = "Changed my name";
-	User::$table->insert($u);
+	$u->insert();
 }
-$users = User::$table->select();
+$users = User::select();
 print_r($users);
