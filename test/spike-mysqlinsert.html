@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Enquete</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div class="container">
+
+<h1>NOM DU CLIENT</h1>
+<form method="post" action="../sql/insert/">
+<input type="hidden" name="dbh" value="127.0.0.1" />
+<input type="hidden" name="dbn" value="test" />
+
+<fieldset>
+<legend>Questionnaire sur l'Informatique</legend>
+
+<p>
+<label>Est ce que vous avez un Ordinateur?</label>
+<label class="radio inline"><input type="radio" name="enq_informatique:ordinateur" value="oui"> Oui</label>
+<label class="radio inline"><input type="radio" name="enq_informatique:ordinateur" value="non"> Non</label>
+</p>
+
+<p>
+<label>Est ce que vous avez un Internet?</label>
+<label class="radio inline"><input type="radio" name="enq_informatique:internet" value="oui"> Oui</label>
+
+<label class="radio inline"><input type="radio" name="enq_informatique:internet" value="non"> Non</label>
+</p>
+
+<p>
+<label>Qui utilise l'Ordinateur ?</label>
+<input type="text" name="enq_informatique:utilisateurs" placeholder="ex. Pharmacien, Preparateur..">
+</p>
+<p>
+<label>Ou est ce que l'Ordinateur est Installé ?</label>
+<input type="text" name="enq_informatique:lieu" placeholder="ex. Bureau, Comptoir, Depot..">
+</p>
+<button type="submit" class="btn btn-primary">Enregistrer</button>
+
+</fieldset>
+</form>
+</div>
+
+</body>
+</html>
