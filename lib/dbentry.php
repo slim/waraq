@@ -19,14 +19,14 @@ class DBEntry
 	{
 		$table = $this->table;
 		$sql = "create table if not exists $table ";
-		$sql .= "(". implode(' varchar (250),', array_keys($this->values)) ." varchar(250))";
+		$sql .= "(". implode(' varchar (250),', array_keys($this->values)) ." varchar(250), primary key (id))";	
 		return $sql;
 	}
 
 	function toSQLinsert()
 	{
 		$table = $this->table;
-		$sql = "INSERT INTO $table ";
+		$sql = "REPLACE INTO $table ";
 		$sql .= "(". implode(',', array_keys($this->values)) .")";
 		$sql .= " VALUES ";
 		$sql .= "('". implode("','", $this->values) ."')";
@@ -54,6 +54,9 @@ class DBEntry
 				$entries[$table] = new DBEntry($table);
 			}
 			$entries[$table]->set($column, $val);
+		}
+		foreach ($entries as $e) {
+			if (!$e->values['id']) $e->values['id'] = uniqid();
 		}
 		return $entries;
 	}

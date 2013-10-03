@@ -11,7 +11,7 @@
 	}
 
 	$entries = DBEntry::extract($_POST);
-	$q = current($entries)->toSQLcreate();
+	$q = reset($entries)->toSQLcreate();
 	mysql_query($q) or fatal_error('<b>SQL ERROR</b> ' . mysql_error()); 
 
 	foreach ($entries as $e) {
