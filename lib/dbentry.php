@@ -50,6 +50,9 @@ class DBEntry
 		$entries = array();
 		foreach ($values as $key => $val) {
 			list($table, $column) = explode(':', $key);
+			if (preg_match('/[^A-Za-z0-9_]+/', $table)) die('Table Name Error');
+			if (preg_match('/[^A-Za-z0-9_]+/', $column)) die('Column Name Error');
+			if (preg_match('/[\-\;]/', $val)) die('Value Error');
 			if (!isset($entries[$table])) {
 				$entries[$table] = new DBEntry($table);
 			}
