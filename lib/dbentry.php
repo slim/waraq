@@ -15,6 +15,14 @@ class DBEntry
 		$this->values[$column] = $value;
 	}
 
+	function toSQLcreate()
+	{
+		$table = $this->table;
+		$sql = "create table if not exists $table ";
+		$sql .= "(". implode(' varchar (250),', array_keys($this->values)) ." varchar(250))";
+		return $sql;
+	}
+
 	function toSQLinsert()
 	{
 		$table = $this->table;
